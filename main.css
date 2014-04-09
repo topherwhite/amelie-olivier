@@ -1,3 +1,10 @@
 
 .navbar-nav li { font-family:'zapfino'; font-size:200%; }
 .navbar-brand { font-family:'zapfino'; font-size:400%; position:relative; top:8px; }
+
+.col-md-3 { position:relative; margin-bottom:20px; }
+.thumbnail { width:250px; height:250px; position:relative; overflow:hidden; cursor:pointer; }
+.thumbnail:hover { filter:alpha(opacity=50); -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; -moz-opacity:0.5; -khtml-opacity:0.5; opacity:0.5; }
+.thumbnail img { position:absolute; visibility:hidden; margin-left:0; margin-right:0; max-width:none; max-height:none; }
+
+.caption { font-weight:bold; position:absolute; top:250px; width:250px; text-align:center; }

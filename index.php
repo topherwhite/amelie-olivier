@@ -6,7 +6,20 @@ function tumblr($tag) {
     )));
 }
 
-$artist = tumblr("artist");
+function modal_html($id,$title,$body) {
+  return '<div class="modal fade" id="'.$id.'" tabindex="-1" role="dialog" aria-labelledby="'.$id.'Label" aria-hidden="true">'
+        .'<div class="modal-dialog"><div class="modal-content"><div class="modal-header">'
+        .'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+        .'<h2 class="modal-title" id="'.$id.'Label">'.$title.'</h4>'
+        .'</div><div class="modal-body">'.$body
+        .'</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
+}
+
+$portraits = json_decode(json_encode(tumblr("portraits")),true);
+$still_life = json_decode(json_encode(tumblr("still-life")),true);
+$artist = json_decode(json_encode(tumblr("artist")),true);
+
+$contact = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "4-contact") { $contact = $v["regular-body"]; } }
 
 
 ?><!DOCTYPE html>
@@ -25,12 +38,13 @@ $artist = tumblr("artist");
     <link rel="stylesheet" type="text/css" href="vendor/navbar-static-top.css" />
     <link rel="stylesheet" type="text/css" href="main.css" />
     <link rel="stylesheet" type="text/css" href="fonts/zapfino/zapfino-1.css" />
+    <script type="text/javascript" src="preload.js"></script>
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
+
   </head>
 
   <body>
@@ -57,7 +71,7 @@ $artist = tumblr("artist");
                   <li><a href="./bio">Bio</a></li>
                   <li><a href="./research">Artistic Research</a></li>
                   <li><a href="./formation">Formation</a></li>
-                  <li><a href="./contact">Contact</a></li>
+                  <li><a href="#" data-toggle="modal" data-target="#contact">Contact</a></li>
                   <li><a href="./gallery">Gallery</a></li>
               </ul>
             </li>
@@ -76,25 +90,47 @@ $artist = tumblr("artist");
     </div>
 
 
-    <div class="modal fade" id="commission" tabindex="-1" role="dialog" aria-labelledby="commissionLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h2 class="modal-title" id="commissionLabel">Commissions</h4>
-          </div>
-          <div class="modal-body">
-            If you are interested in a personalized portrait or still life commission,
-            <br />please contact the artist by e-mail:
-            <br /><br />
-            <a href="mailto:olivier.amelie@gmail.com">olivier.amelie@gmail.com</a>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+    <div class="container">
+        <?php
+          foreach ($still_life["posts"] as $i=>$v) {
+            if (($i % 4) == 0) { echo '<div class="row">'; }
+
+            echo '<div class="col-xs-6 col-md-3">'
+                  .'<div class="thumbnail">'
+                    .'<img alt="" onLoad="setSquImg(this)" src="'.$v["photo-url-400"].'" />'
+                  .'</div>'
+                  .'<div class="caption">'.substr($v["photo-caption"],strpos($v["photo-caption"],"<strong>")+8,strpos($v["photo-caption"],"</strong>")-8-strpos($v["photo-caption"],"<strong>")).'</div>'
+                .'</div>';
+
+            if (($i % 4) == 3) { echo '</div>'; }
+          }
+        ?>
+<!--         <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img data-src="holder.js/100%x180" alt="" />
+          </a>
         </div>
-      </div>
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img data-src="holder.js/100%x180" alt="" />
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img data-src="holder.js/100%x180" alt="" />
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img data-src="holder.js/100%x180" alt="" />
+          </a>
+        </div> -->
+      <?php /*var_dump($still_life);*/ ?>
     </div>
+
+
+    <?php echo modal_html("commission","Commission",'If you are interested in a personalized portrait or still life commission,<br />please contact the artist by e-mail:<br /><br /><a href="mailto:olivier.amelie@gmail.com">olivier.amelie@gmail.com</a>'); ?>
+    <?php echo modal_html("contact","Contact",$contact); ?>
 
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
