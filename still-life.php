@@ -15,6 +15,15 @@ function modal_html($id,$title,$body) {
         .'</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
 }
 
+function big_modal_html($id,$title,$body) {
+  return '<div class="modal fade bs-example-modal-lg" id="'.$id.'" tabindex="-1" role="dialog" aria-labelledby="'.$id.'Label" aria-hidden="true">'
+        .'<div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header">'
+        .'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+        .'<h2 class="modal-title" id="'.$id.'Label">'.$title.'</h4>'
+        .'</div><div class="modal-body">'.$body
+        .'</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
+}
+
 $portraits = json_decode(json_encode(tumblr("portraits")),true);
 $still_life = json_decode(json_encode(tumblr("still-life")),true);
 $artist = json_decode(json_encode(tumblr("artist")),true);
@@ -95,7 +104,7 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
             if (($i % 4) == 0) { echo '<div class="row">'; }
 
             echo '<div class="col-xs-6 col-md-3">'
-                  .'<div class="thumbnail" onClick="window.open(\''.$v["photo-url-1280"].'\')">'
+                  .'<div class="thumbnail" onClick="$(\'#'.$v['id'].'\').modal();">'
                     .'<img alt="" onLoad="setSquImg(this)" src="'.$v["photo-url-400"].'" />'
                   .'</div>'
                   .'<div class="caption">'.substr($v["photo-caption"],strpos($v["photo-caption"],"<strong>")+8,strpos($v["photo-caption"],"</strong>")-8-strpos($v["photo-caption"],"<strong>")).'</div>'
@@ -133,6 +142,14 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
     <?php echo modal_html("gallery","Gallerie",$gallery); ?>
     <?php echo modal_html("formation","Formation",$formation); ?>
 
+    <?php
+      foreach ($still_life["posts"] as $i=>$v) {
+        echo big_modal_html($v["id"],substr($v["photo-caption"],strpos($v["photo-caption"],"<strong>")+8,strpos($v["photo-caption"],"</strong>")-8-strpos($v["photo-caption"],"<strong>")),
+          "<img src=\"".$v["photo-url-1280"]."\" style=\"width:100%;clear:both;float:left;margin-bottom:20px;\" />"
+          .substr($v["photo-caption"],strpos($v["photo-caption"],"</strong>")+9)
+          );
+      }
+    ?>
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
