@@ -17,7 +17,6 @@ $artist = tumblr("artist");
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-<!--     <link rel="shortcut icon" href="../../assets/ico/favicon.ico"> -->
 
     <title>Amélie Olivier Fine Art</title>
 
@@ -27,11 +26,11 @@ $artist = tumblr("artist");
     <link rel="stylesheet" type="text/css" href="main.css" />
     <link rel="stylesheet" type="text/css" href="fonts/zapfino/zapfino-1.css" />
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
   </head>
 
   <body>
@@ -76,11 +75,6 @@ $artist = tumblr("artist");
     
     </div>
 
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
-
 
     <div class="modal fade" id="commission" tabindex="-1" role="dialog" aria-labelledby="commissionLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -102,6 +96,12 @@ $artist = tumblr("artist");
       </div>
     </div>
 
+
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-42202324-2', 'amelie-olivier.com'); ga('send', 'pageview'); </script>
 
   </body>
 </html>
