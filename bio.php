@@ -19,11 +19,8 @@ $portraits = json_decode(json_encode(tumblr("portraits")),true);
 $still_life = json_decode(json_encode(tumblr("still-life")),true);
 $artist = json_decode(json_encode(tumblr("artist")),true);
 
-$bio = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "1-bio") { $bio = $v["regular-body"]; } }
-$research = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "2-research") { $research = $v["regular-body"]; } }
-$formation = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "3-formation") { $formation = $v["regular-body"]; } }
 $contact = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "4-contact") { $contact = $v["regular-body"]; } }
-$gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie") { $gallery = $v["regular-body"]; } }
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -60,8 +57,8 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
         <div class="navbar-collapse collapse">
 
           <ul class="nav navbar-nav navbar-right" style="margin-right:80px;">
-            <li class="active"><a href="./">Home</a></li>
-            <li class="dropdown">
+            <li><a href="./">Home</a></li>
+            <li class="dropdown active">
                 <a href="/" class="dropdown-toggle" data-toggle="dropdown">Portfolio <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="./still-life.php">Still Life</a></li>
@@ -71,11 +68,11 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
             <li class="dropdown">
                 <a href="/" class="dropdown-toggle" data-toggle="dropdown">The Artist <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="./bio.php">Bio</a></li>
-                  <li><a href="./research.php">Artistic Research</a></li>
-                  <li><a href="#" data-toggle="modal" data-target="#formation">Formation</a></li>
+                  <li><a href="./bio">Bio</a></li>
+                  <li><a href="./research">Artistic Research</a></li>
+                  <li><a href="./formation">Formation</a></li>
                   <li><a href="#" data-toggle="modal" data-target="#contact">Contact</a></li>
-                  <li><a href="#" data-toggle="modal" data-target="#gallery">Gallery</a></li>
+                  <li><a href="./gallery">Gallery</a></li>
               </ul>
             </li>
             <li><a target="_blank" href="http://amelie-fineart.tumblr.com/">Blog</a></li>
@@ -86,18 +83,28 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
       </div>
     </div>
 
-    <div class="container">
-    
-        <iframe style="position:relative;width:640px;height:360px;float:right" src="//www.youtube.com/embed/nuif3BiXxZM?controls=2&amp;showinfo=0&amp;theme=light" frameborder="0" allowfullscreen></iframe>
-    
-    </div>
 
+
+    <div class="container">
+        <?php
+          foreach ($portraits["posts"] as $i=>$v) {
+            if (($i % 4) == 0) { echo '<div class="row">'; }
+
+            echo '<div class="col-xs-6 col-md-3">'
+                  .'<div class="thumbnail">'
+                    .'<img alt="" onLoad="setSquImg(this)" src="'.$v["photo-url-400"].'" />'
+                  .'</div>'
+                  .'<div class="caption">'.substr($v["photo-caption"],strpos($v["photo-caption"],"<strong>")+8,strpos($v["photo-caption"],"</strong>")-8-strpos($v["photo-caption"],"<strong>")).'</div>'
+                .'</div>';
+
+            if (($i % 4) == 3) { echo '</div>'; }
+          }
+        ?>
+    </div>
 
 
     <?php echo modal_html("commission","Commission",'If you are interested in a personalized portrait or still life commission,<br />please contact the artist by e-mail:<br /><br /><a href="mailto:olivier.amelie@gmail.com">olivier.amelie@gmail.com</a>'); ?>
     <?php echo modal_html("contact","Contact",$contact); ?>
-    <?php echo modal_html("gallery","Gallerie",$gallery); ?>
-    <?php echo modal_html("formation","Formation",$formation); ?>
 
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
