@@ -25,7 +25,6 @@ $formation = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "3-format
 $contact = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "4-contact") { $contact = $v["regular-body"]; } }
 $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie") { $gallery = $v["regular-body"]; } }
 
-
 ?><!DOCTYPE html>
 <html lang="en">
   <head>
@@ -95,7 +94,7 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
             if (($i % 4) == 0) { echo '<div class="row">'; }
 
             echo '<div class="col-xs-6 col-md-3">'
-                  .'<div class="thumbnail">'
+                  .'<div class="thumbnail" onClick="window.open(\''.$v["photo-url-1280"].'\')">'
                     .'<img alt="" onLoad="setSquImg(this)" src="'.$v["photo-url-400"].'" />'
                   .'</div>'
                   .'<div class="caption">'.substr($v["photo-caption"],strpos($v["photo-caption"],"<strong>")+8,strpos($v["photo-caption"],"</strong>")-8-strpos($v["photo-caption"],"<strong>")).'</div>'

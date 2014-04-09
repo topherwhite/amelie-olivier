@@ -62,14 +62,14 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
 
           <ul class="nav navbar-nav navbar-right" style="">
             <li><a href="./">Home</a></li>
-            <li class="dropdown active">
+            <li class="dropdown">
                 <a href="/" class="dropdown-toggle" data-toggle="dropdown">Portfolio <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="./still-life.php">Still Life</a></li>
                   <li><a href="./portraits.php">Portraits</a></li>
               </ul>
             </li>
-            <li class="dropdown">
+            <li class="dropdown active">
                 <a href="/" class="dropdown-toggle" data-toggle="dropdown">The Artist <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="./bio.php">Bio</a></li>
