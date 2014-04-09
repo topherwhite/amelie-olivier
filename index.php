@@ -15,8 +15,8 @@ function modal_html($id,$title,$body) {
         .'</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
 }
 
-$portraits = json_decode(json_encode(tumblr("portraits")),true);
-$still_life = json_decode(json_encode(tumblr("still-life")),true);
+//$portraits = json_decode(json_encode(tumblr("portraits")),true);
+//$still_life = json_decode(json_encode(tumblr("still-life")),true);
 $artist = json_decode(json_encode(tumblr("artist")),true);
 
 $bio = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "1-bio") { $bio = $v["regular-body"]; } }
@@ -59,7 +59,7 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
         </div>
         <div class="navbar-collapse collapse">
 
-          <ul class="nav navbar-nav navbar-right" style="margin-right:80px;">
+          <ul class="nav navbar-nav navbar-right" style="">
             <li class="active"><a href="./">Home</a></li>
             <li class="dropdown">
                 <a href="/" class="dropdown-toggle" data-toggle="dropdown">Portfolio <b class="caret"></b></a>
@@ -86,9 +86,9 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
       </div>
     </div>
 
-    <div class="container">
+    <div class="container" style="position:relative;">
     
-        <iframe style="position:relative;width:640px;height:360px;float:right" src="//www.youtube.com/embed/nuif3BiXxZM?controls=2&amp;showinfo=0&amp;theme=light" frameborder="0" allowfullscreen></iframe>
+        <iframe style="position:relative;width:84%;height:540px;left:8%;" src="//www.youtube.com/embed/nuif3BiXxZM?controls=2&amp;showinfo=0&amp;theme=light" frameborder="0" allowfullscreen></iframe>
     
     </div>
 

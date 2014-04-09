@@ -15,8 +15,8 @@ function modal_html($id,$title,$body) {
         .'</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
 }
 
-$portraits = json_decode(json_encode(tumblr("portraits")),true);
-$still_life = json_decode(json_encode(tumblr("still-life")),true);
+// $portraits = json_decode(json_encode(tumblr("portraits")),true);
+// $still_life = json_decode(json_encode(tumblr("still-life")),true);
 $artist = json_decode(json_encode(tumblr("artist")),true);
 
 $bio = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "1-bio") { $bio = $v["regular-body"]; } }
@@ -60,7 +60,7 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
         </div>
         <div class="navbar-collapse collapse">
 
-          <ul class="nav navbar-nav navbar-right" style="margin-right:80px;">
+          <ul class="nav navbar-nav navbar-right" style="">
             <li><a href="./">Home</a></li>
             <li class="dropdown active">
                 <a href="/" class="dropdown-toggle" data-toggle="dropdown">Portfolio <b class="caret"></b></a>
@@ -90,6 +90,7 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
 
 
     <div class="container">
+        <img src="http://37.media.tumblr.com/b87b0e8bc89be544b3ca898a741506fb/tumblr_n3r9e8AluU1txt66ro1_250.jpg" style="position:relative;float:right;margin:0px 0px 10px 10px;height:250px;width:250px;" />
         <?php
           echo $bio;
         ?>

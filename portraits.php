@@ -60,7 +60,7 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
         </div>
         <div class="navbar-collapse collapse">
 
-          <ul class="nav navbar-nav navbar-right" style="margin-right:80px;">
+          <ul class="nav navbar-nav navbar-right" style="">
             <li><a href="./">Home</a></li>
             <li class="dropdown active">
                 <a href="/" class="dropdown-toggle" data-toggle="dropdown">Portfolio <b class="caret"></b></a>
