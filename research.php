@@ -20,7 +20,7 @@ $still_life = json_decode(json_encode(tumblr("still-life")),true);
 $artist = json_decode(json_encode(tumblr("artist")),true);
 
 $bio = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "1-bio") { $bio = $v["regular-body"]; } }
-$research = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "2-research") { $research = $v["regular-body"]; } }
+$research = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "2-artistic-research") { $research = $v["regular-body"]; } }
 $formation = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "3-formation") { $formation = $v["regular-body"]; } }
 $contact = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "4-contact") { $contact = $v["regular-body"]; } }
 $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie") { $gallery = $v["regular-body"]; } }
@@ -91,7 +91,7 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
 
     <div class="container">
         <?php
-          echo $bio;
+          echo $research;
         ?>
     </div>
 
