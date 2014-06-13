@@ -54,7 +54,7 @@ $artshow_body = json_decode(json_encode(tumblr("artshowbody")),true);
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="vendor/navbar-static-top.css" />
-    <link rel="stylesheet" type="text/css" href="main.css" />
+    <link rel="stylesheet" type="text/css" href="main.css?asdf" />
     <link rel="stylesheet" type="text/css" href="fonts/zapfino/zapfino-1.css" />
     <script type="text/javascript" src="preload.js"></script>
 
