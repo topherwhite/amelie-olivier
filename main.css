@@ -8,3 +8,6 @@
 .thumbnail img { position:absolute; visibility:hidden; margin-left:0; margin-right:0; max-width:none; max-height:none; }
 
 .caption { font-weight:bold; position:absolute; top:250px; width:250px; text-align:center; }
+
+.artshow-txt { position:relative;width:84%;height:auto; padding:20px 0px 20px 0px; left:8%; font-weight:bold; font-size:24px; }
+.artshow-txt img { float:left; margin-right:20px; border:solid 1px #cccccc; }

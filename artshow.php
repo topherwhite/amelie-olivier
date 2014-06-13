@@ -15,6 +15,15 @@ function modal_html($id,$title,$body) {
         .'</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
 }
 
+function big_modal_html($id,$title,$body) {
+  return '<div class="modal fade bs-example-modal-lg" id="'.$id.'" tabindex="-1" role="dialog" aria-labelledby="'.$id.'Label" aria-hidden="true">'
+        .'<div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header">'
+        .'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+        .'<h2 class="modal-title" id="'.$id.'Label">'.$title.'</h4>'
+        .'</div><div class="modal-body">'.$body
+        .'</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
+}
+
 //$portraits = json_decode(json_encode(tumblr("portraits")),true);
 //$still_life = json_decode(json_encode(tumblr("still-life")),true);
 $artist = json_decode(json_encode(tumblr("artist")),true);
@@ -24,6 +33,12 @@ $research = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "2-researc
 $formation = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "3-formation") { $formation = $v["regular-body"]; } }
 $contact = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "4-contact") { $contact = $v["regular-body"]; } }
 $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie") { $gallery = $v["regular-body"]; } }
+
+$artshow = json_decode(json_encode(tumblr("artshow")),true);
+$artshow_body = json_decode(json_encode(tumblr("artshowbody")),true);
+
+// var_dump($artshow["posts"]);
+// die();
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -60,8 +75,8 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
         <div class="navbar-collapse collapse">
 
           <ul class="nav navbar-nav navbar-right" style="">
-            <li class="active"><a href="./">Home</a></li>
-            <li class=""><a href="./artshow.php">Art Show</a></li>
+            <li class=""><a href="./">Home</a></li>
+            <li class="active"><a href="./artshow.php">Art Show</a></li>
             <li class="dropdown">
                 <a href="/" class="dropdown-toggle" data-toggle="dropdown">Portfolio <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -89,8 +104,29 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
 
     <div class="container" style="position:relative;">
     
-        <iframe style="position:relative;width:84%;height:540px;left:8%;" src="//www.youtube.com/embed/nuif3BiXxZM?controls=2&amp;showinfo=0&amp;theme=light" frameborder="0" allowfullscreen></iframe>
+      <div class="artshow-txt">
+        <?php
+        echo $artshow_body["posts"][0]["regular-body"];
+        ?>
+      </div>
     
+    </div>
+
+        <div class="container" style="margin-top:30px;">
+        <?php
+          foreach ($artshow["posts"] as $i=>$v) {
+            if (($i % 4) == 0) { echo '<div class="row">'; }
+
+            echo '<div class="col-xs-6 col-md-3">'
+                  .'<div class="thumbnail" onClick="$(\'#'.$v['id'].'\').modal();">'
+                    .'<img alt="" onLoad="setSquImg(this)" src="'.$v["photo-url-400"].'" />'
+                  .'</div>'
+                  .'<div class="caption">'.substr($v["photo-caption"],strpos($v["photo-caption"],"<strong>")+8,strpos($v["photo-caption"],"</strong>")-8-strpos($v["photo-caption"],"<strong>")).'</div>'
+                .'</div>';
+
+            if (($i % 4) == 3) { echo '</div>'; }
+          }
+        ?>
     </div>
 
 
@@ -100,6 +136,15 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
     <?php echo modal_html("gallery","Gallerie",$gallery); ?>
     <?php echo modal_html("formation","Formation",$formation); ?>
 
+
+    <?php
+      foreach ($artshow["posts"] as $i=>$v) {
+        echo big_modal_html($v["id"],substr($v["photo-caption"],strpos($v["photo-caption"],"<strong>")+8,strpos($v["photo-caption"],"</strong>")-8-strpos($v["photo-caption"],"<strong>")),
+          "<img src=\"".$v["photo-url-1280"]."\" style=\"width:100%;clear:both;float:left;margin-bottom:20px;\" />"
+          .substr($v["photo-caption"],strpos($v["photo-caption"],"</strong>")+9)
+          );
+      }
+    ?>
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
