@@ -49,9 +49,9 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="vendor/navbar-static-top.css" />
-    <link rel="stylesheet" type="text/css" href="main.css" />
-    <link rel="stylesheet" type="text/css" href="fonts/zapfino/zapfino-1.css" />
-    <script type="text/javascript" src="preload.js"></script>
+    <link rel="stylesheet" type="text/css" href="public/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="public/fonts/zapfino/zapfino-1.css" />
+    <script type="text/javascript" src="public/js/preload.js"></script>
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>

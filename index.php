@@ -17,13 +17,16 @@ function modal_html($id,$title,$body) {
 
 //$portraits = json_decode(json_encode(tumblr("portraits")),true);
 //$still_life = json_decode(json_encode(tumblr("still-life")),true);
-$artist = json_decode(json_encode(tumblr("artist")),true);
+$all = json_decode(json_encode(tumblr("website")),true);
 
-$bio = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "1-bio") { $bio = $v["regular-body"]; } }
-$research = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "2-research") { $research = $v["regular-body"]; } }
-$formation = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "3-formation") { $formation = $v["regular-body"]; } }
-$contact = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "4-contact") { $contact = $v["regular-body"]; } }
-$gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie") { $gallery = $v["regular-body"]; } }
+
+
+
+// $paintings = ""; foreach ($all["posts"] as $v) { if ($v["slug"] === "1-bio") { $bio = $v["regular-body"]; } }
+// $research = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "2-research") { $research = $v["regular-body"]; } }
+// $formation = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "3-formation") { $formation = $v["regular-body"]; } }
+// $contact = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "4-contact") { $contact = $v["regular-body"]; } }
+// $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie") { $gallery = $v["regular-body"]; } }
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -39,9 +42,9 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="vendor/navbar-static-top.css" />
-    <link rel="stylesheet" type="text/css" href="main.css" />
-    <link rel="stylesheet" type="text/css" href="fonts/zapfino/zapfino-1.css" />
-    <script type="text/javascript" src="preload.js"></script>
+    <link rel="stylesheet" type="text/css" href="public/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="public/fonts/zapfino/zapfino-1.css" />
+    <script type="text/javascript" src="public/js/preload.js"></script>
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -89,8 +92,21 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
 
     <div class="container" style="position:relative;">
     
-        <iframe style="position:relative;width:84%;height:540px;left:8%;" src="//www.youtube.com/embed/nuif3BiXxZM?controls=2&amp;showinfo=0&amp;theme=light" frameborder="0" allowfullscreen></iframe>
-    
+            <?php
+          foreach ($all["posts"] as $i=>$v) {
+            if (($i % 4) == 0) { echo '<div class="row">'; }
+
+            echo '<div class="col-xs-6 col-md-3">'
+                  .'<div class="thumbnail" onClick="$(\'#'.$v['id'].'\').modal();">'
+                    .'<img alt="" onLoad="setSquImg(this)" src="'.$v["photo-url-400"].'" />'
+                  .'</div>'
+                  .'<div class="caption">'.substr($v["photo-caption"],strpos($v["photo-caption"],"<strong>")+8,strpos($v["photo-caption"],"</strong>")-8-strpos($v["photo-caption"],"<strong>")).'</div>'
+                .'</div>';
+
+            if (($i % 4) == 3) { echo '</div>'; }
+          }
+        ?>
+
     </div>
 
 

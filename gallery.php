@@ -2,7 +2,7 @@
 
 function tumblr($tag) {
     return json_decode(str_replace("var tumblr_api_read = {","{",str_replace("};","}",
-    file_get_contents("http://amelie-olivier-fine-art.tumblr.com/tagged/".$tag."/json")
+    file_get_contents("http://amelie-olivier-fine-art.tumblr.com/api/read/json?num=50&tagged=".$tag)
     )));
 }
 
@@ -15,16 +15,18 @@ function modal_html($id,$title,$body) {
         .'</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
 }
 
-// $portraits = json_decode(json_encode(tumblr("portraits")),true);
-// $still_life = json_decode(json_encode(tumblr("still-life")),true);
-$artist = json_decode(json_encode(tumblr("artist")),true);
+function big_modal_html($id,$title,$body) {
+  return '<div class="modal fade bs-example-modal-lg" id="'.$id.'" tabindex="-1" role="dialog" aria-labelledby="'.$id.'Label" aria-hidden="true">'
+        .'<div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header">'
+        .'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+        .'<h2 class="modal-title" id="'.$id.'Label">'.$title.'</h4>'
+        .'</div><div class="modal-body">'.$body
+        .'</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
+}
 
-$bio = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "1-bio") { $bio = $v["regular-body"]; } }
-$research = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "2-research") { $research = $v["regular-body"]; } }
-$formation = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "3-formation") { $formation = $v["regular-body"]; } }
-$contact = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "4-contact") { $contact = $v["regular-body"]; } }
-$gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie") { $gallery = $v["regular-body"]; } }
 
+
+$gallery = json_decode(json_encode(tumblr("website")),true);
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -62,22 +64,11 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
 
           <ul class="nav navbar-nav navbar-right" style="">
             <li><a href="./">Home</a></li>
-            <li class="dropdown">
-                <a href="/" class="dropdown-toggle" data-toggle="dropdown">Portfolio <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="./still-life.php">Still Life</a></li>
-                  <li><a href="./portraits.php">Portraits</a></li>
-              </ul>
-            </li>
             <li class="dropdown active">
-                <a href="/" class="dropdown-toggle" data-toggle="dropdown">The Artist <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="./bio.php">Bio</a></li>
-                  <li><a href="./research.php">Artistic Research</a></li>
-                  <li><a href="#" data-toggle="modal" data-target="#formation">Formation</a></li>
-                  <li><a href="#" data-toggle="modal" data-target="#contact">Contact</a></li>
-                  <li><a href="#" data-toggle="modal" data-target="#gallery">Gallery</a></li>
-              </ul>
+                <a href="./gallery.php">Gallery</a>
+            </li>
+            <li class="dropdown">
+                <a href="./artist.php">The Artist</a>
             </li>
             <li><a target="_blank" href="http://amelie-fineart.tumblr.com/">Blog</a></li>
             <li><a href="#" data-toggle="modal" data-target="#commission">Commission</a></li>
@@ -90,9 +81,19 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
 
 
     <div class="container">
-        <img src="http://37.media.tumblr.com/b87b0e8bc89be544b3ca898a741506fb/tumblr_n3r9e8AluU1txt66ro1_250.jpg" style="position:relative;float:right;margin:0px 0px 10px 10px;height:250px;width:250px;" />
         <?php
-          echo $bio;
+          foreach ($gallery["posts"] as $i=>$v) {
+            if (($i % 4) == 0) { echo '<div class="row">'; }
+
+            echo '<div class="col-xs-6 col-md-3">'
+                  .'<div class="thumbnail" onClick="$(\'#'.$v['id'].'\').modal();">'
+                    .'<img alt="" onLoad="setSquImg(this)" src="'.$v["photo-url-400"].'" />'
+                  .'</div>'
+                  .'<div class="caption">'.substr($v["photo-caption"],strpos($v["photo-caption"],"<strong>")+8,strpos($v["photo-caption"],"</strong>")-8-strpos($v["photo-caption"],"<strong>")).'</div>'
+                .'</div>';
+
+            if (($i % 4) == 3) { echo '</div>'; }
+          }
         ?>
     </div>
 
@@ -101,7 +102,15 @@ $gallery = ""; foreach ($artist["posts"] as $v) { if ($v["slug"] === "5-galerie"
     <?php echo modal_html("contact","Contact",$contact); ?>
     <?php echo modal_html("gallery","Gallerie",$gallery); ?>
     <?php echo modal_html("formation","Formation",$formation); ?>
-
+    
+    <?php
+      foreach ($gallery["posts"] as $i=>$v) {
+        echo big_modal_html($v["id"],substr($v["photo-caption"],strpos($v["photo-caption"],"<strong>")+8,strpos($v["photo-caption"],"</strong>")-8-strpos($v["photo-caption"],"<strong>")),
+          "<img src=\"".$v["photo-url-1280"]."\" style=\"width:100%;clear:both;float:left;margin-bottom:20px;\" />"
+          .substr($v["photo-caption"],strpos($v["photo-caption"],"</strong>")+9)
+          );
+      }
+    ?>
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
